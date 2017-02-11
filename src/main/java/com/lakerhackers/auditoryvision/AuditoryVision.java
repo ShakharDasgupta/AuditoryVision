@@ -1,8 +1,8 @@
 package com.lakerhackers.auditoryvision;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 import com.github.sarxos.webcam.Webcam;
@@ -10,6 +10,9 @@ import com.ibm.watson.developer_cloud.visual_recognition.v3.VisualRecognition;
 import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyImagesOptions;
 import com.ibm.watson.developer_cloud.visual_recognition.v3.model.VisualClassification;
 
+/*
+ * @author Shakhar Dasgupta <sdasgupt@oswego.edu>
+ */
 public class AuditoryVision {
 	
 	private static String API_KEY = "7e2f8ff046cedd2ea0ef4ee72fe825ac39a1db13";
@@ -17,6 +20,9 @@ public class AuditoryVision {
 	
 	public File capture() throws IOException {
 		Webcam webcam = Webcam.getDefault();
+		Dimension[] dimensions = webcam.getViewSizes();
+		Dimension largest = dimensions[dimensions.length - 1];
+		webcam.setViewSize(largest);
 		webcam.open();
 		File file = new File(CAPTURE_PATH);
 		ImageIO.write(webcam.getImage(), "jpg", file);
@@ -46,5 +52,4 @@ public class AuditoryVision {
 			e.printStackTrace();
 		}
 	}
-	
 }
